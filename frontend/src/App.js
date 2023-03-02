@@ -1,9 +1,10 @@
 import "./App.css";
+import FormularioManga from "./components/FormularioManga/FormularioManga";
 
 function App() {
   return (
     <div className="App">
-      <h1>MANGÁ READER</h1>
+      <FormularioManga />
     </div>
   );
 }
