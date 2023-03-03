@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 
-function FormularioManga() {
+function FormularioManga(props) {
   const [nome, setNome] = useState("");
   const [autor, setAutor] = useState("");
   const [data, setData] = useState("");
   const [sinopse, setSinopse] = useState("");
-  const [listaMangas, setListaMangas] = useState([]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -15,7 +14,7 @@ function FormularioManga() {
       data: data,
       sinopse: sinopse,
     };
-    setListaMangas([...listaMangas, novoManga]);
+    props.onMangaAdicionado(novoManga);
     setNome("");
     setAutor("");
     setData("");
@@ -66,17 +65,7 @@ function FormularioManga() {
         <br />
         <input type="submit" value="Enviar" />
       </form>
-      <ul>
-        {listaMangas.map((manga, index) => (
-          <li key={index}>
-            <h2>{manga.nome}</h2>
-            <p>Autor: {manga.autor}</p>
-            <p>Data de Publicação: {manga.data}</p>
-            <p>Sinopse: {manga.sinopse}</p>
-            <p>Mostrar: {manga.index}</p>
-          </li>
-        ))}
-      </ul>
+      S
     </div>
   );
 }

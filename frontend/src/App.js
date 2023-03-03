@@ -1,12 +1,13 @@
+import React from "react";
 import "./App.css";
-import FormularioManga from "./components/FormularioManga/FormularioManga";
+import MangaList from "./components/MangaList/MangaList";
 
 //GIT FEATURES!
 
 function App() {
   return (
     <div className="App">
-      <FormularioManga />
+      <MangaList />
     </div>
   );
 }
