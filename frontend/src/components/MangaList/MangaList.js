@@ -16,7 +16,8 @@ function MangaList() {
 
   return (
     <div>
-      <FormularioManga onMangaAdicionado={handleMangaAdicionado} />;
+      <FormularioManga onMangaAdicionado={handleMangaAdicionado} />
+      {mangas.length === 0 && <p>Nenhum mangá adicionado</p>}
       <ul>
         {mangas.map((manga, index) => (
           <li key={index}>

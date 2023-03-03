@@ -3,7 +3,7 @@ import React, { useState } from "react";
 function FormularioManga(props) {
   const [nome, setNome] = useState("");
   const [autor, setAutor] = useState("");
-  const [data, setData] = useState("");
+  const [publicacao, setPublicacao] = useState("");
   const [sinopse, setSinopse] = useState("");
 
   function handleSubmit(event) {
@@ -11,13 +11,14 @@ function FormularioManga(props) {
     const novoManga = {
       nome: nome,
       autor: autor,
-      data: data,
+      publicacao: publicacao,
       sinopse: sinopse,
     };
     props.onMangaAdicionado(novoManga);
+
     setNome("");
     setAutor("");
-    setData("");
+    setPublicacao("");
     setSinopse("");
   }
 
@@ -49,8 +50,8 @@ function FormularioManga(props) {
           <input
             type="date"
             name="data"
-            value={data}
-            onChange={(event) => setData(event.target.value)}
+            value={publicacao}
+            onChange={(event) => setPublicacao(event.target.value)}
           />
         </label>
         <br />
@@ -63,9 +64,8 @@ function FormularioManga(props) {
           ></textarea>
         </label>
         <br />
-        <input type="submit" value="Enviar" />
+        <button type="submit">Enviar</button>
       </form>
-      S
     </div>
   );
 }
