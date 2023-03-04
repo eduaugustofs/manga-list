@@ -25,6 +25,17 @@ app.get("/mangas", (req, res) => {
   });
 });
 
+app.delete("/mangas/:id", (req, res) => {
+  const mangaId = req.params.id;
+  const q = "DELETE FROM manga WHERE id = ?";
+  const r = "SELECT * FROM manga";
+
+  db.query(q, r, [mangaId], (err, r) => {
+    if (err) return res.json(err);
+    return res.json(r);
+  });
+});
+
 //Inserindo os dados no banco
 app.post("/addmangas", (req, res) => {
   const q =
@@ -38,16 +49,6 @@ app.post("/addmangas", (req, res) => {
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
     return res.json("ok!!");
-  });
-});
-
-app.delete("/mangas/:id", (req, res) => {
-  const mangaId = req.params.id;
-  const q = "DELETE FROM manga WHERE id = ?";
-
-  db.query(q, [mangaId], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("Manga deletado");
   });
 });
 

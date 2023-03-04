@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import FormularioManga from "../FormularioManga/FormularioManga";
 
-function MangaList() {
+function MangaList(props) {
   const [mangas, setMangas] = useState([]);
 
   useEffect(() => {
@@ -16,9 +17,14 @@ function MangaList() {
     FetchAllMangas();
   }, []);
 
+  const uuuu = (manga) => {
+    setMangas([...mangas, manga]);
+  };
+
   const RemoverManga = async (id) => {
     try {
-      await axios.delete("http://localhost:5000/mangas/" + id);
+      const res = await axios.delete("http://localhost:5000/mangas/" + id);
+      setMangas(res.r);
     } catch (err) {
       console.log(err);
     }
@@ -26,10 +32,11 @@ function MangaList() {
 
   return (
     <div>
+      <FormularioManga onPass={uuuu} />
       <ul>
         {mangas.map((manga) => (
           <div key={manga.id}>
-            <li>
+            <li key={manga.id}>
               <h2>{manga.nome}</h2>
               <p>Autor: {manga.autor}</p>
               <p>Data de Publicação: {manga.data}</p>

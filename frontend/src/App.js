@@ -1,7 +1,8 @@
 import React from "react";
+
+//import FormularioManga from "./components/FormularioManga/FormularioManga";
 //import { Routes, Route, BrowserRouter } from "react-router-dom";
 
-import FormularioManga from "./components/FormularioManga/FormularioManga";
 import MangaList from "./components/MangaList/MangaList";
 
 //GIT FEATURES!
@@ -9,7 +10,6 @@ import MangaList from "./components/MangaList/MangaList";
 function App() {
   return (
     <div>
-      <FormularioManga />
       <MangaList />
     </div>
   );

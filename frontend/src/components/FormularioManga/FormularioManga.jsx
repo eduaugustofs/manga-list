@@ -17,10 +17,11 @@ function FormularioManga(props) {
 
   const handleClick = async (e) => {
     e.preventDefault();
+
     try {
-      await axios.post("http://localhost:8800/addmangas", manga);
+      await axios.post("http://localhost:5000/addmangas", manga);
+      props.onPass(manga);
     } catch (err) {}
-    window.location.reload();
   };
 
   return (
