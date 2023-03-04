@@ -1,13 +1,19 @@
 import React from "react";
-import "./App.css";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+
+import FormularioManga from "./components/FormularioManga/FormularioManga";
 import MangaList from "./components/MangaList/MangaList";
 
 //GIT FEATURES!
 
 function App() {
   return (
-    <div className="App">
-      <MangaList />
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={[<FormularioManga />, <MangaList />]} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

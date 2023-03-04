@@ -1,22 +1,31 @@
-import React, { useState } from "react";
-import FormularioManga from "../FormularioManga/FormularioManga";
+import React, { useEffect, useState } from "react";
+//import FormularioManga from "../FormularioManga/FormularioManga";
+import axios from "axios";
 
 function MangaList() {
   const [mangas, setMangas] = useState([]);
 
-  function handleMangaAdicionado(novoManga) {
-    setMangas([...mangas, novoManga]);
-  }
+  useEffect(() => {
+    const FetchAllMangas = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/mangas");
+        setMangas(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    FetchAllMangas();
+  }, []);
 
   const removerManga = (index) => {
     const mangasRestantes = [...mangas];
     mangasRestantes.splice(index, 1);
+    console.log(mangasRestantes);
     setMangas(mangasRestantes);
   };
 
   return (
     <div>
-      <FormularioManga onMangaAdicionado={handleMangaAdicionado} />
       {mangas.length === 0 && <p>Nenhum mangá adicionado</p>}
       <ul>
         {mangas.map((manga, index) => (

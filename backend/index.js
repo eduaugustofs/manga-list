@@ -1,18 +1,45 @@
 import express from "express";
-import userRoutes from "./routes/manga.js";
+import mysql from "mysql";
 import cors from "cors";
 
-//express para rodar localmente
 const app = express();
 
-//para o express usar json (necessário para fazer mudanças)
+//Criando conexão com o bando de dados;
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "crud_manga",
+});
+
 app.use(express.json());
-//para não dar conflito de localhost
 app.use(cors());
 
-app.use("/", userRoutes);
+//Pegando os dados do banco de dados e exibindo;
+app.get("/mangas", (req, res) => {
+  const q = "SELECT * FROM manga";
+  db.query(q, (err, data) => {
+    if (err) return res.json(err);
 
-//localhost
-app.listen(8800);
+    return res.json(data);
+  });
+});
 
-//console.log(app);
+//Inserindo os dados no banco
+app.post("/bb", (req, res) => {
+  const q =
+    "INSERT INTO manga (`nome`, `autor`, `publicacao`, `sinopse`) VALUES (?)";
+  const values = [
+    req.body.nome,
+    req.body.autor,
+    req.body.publicacao,
+    req.body.sinopse,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("ok!!");
+  });
+});
+
+//Aplicação funcionando em localghost 8800;
+app.listen(5000);
