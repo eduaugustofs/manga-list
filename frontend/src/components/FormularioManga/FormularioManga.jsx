@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function FormularioManga() {
+function FormularioManga(props) {
   const [manga, setManga] = useState({
     nome: "",
     autor: "",
@@ -18,8 +18,9 @@ function FormularioManga() {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/bb", manga);
+      await axios.post("http://localhost:8800/addmangas", manga);
     } catch (err) {}
+    window.location.reload();
   };
 
   return (

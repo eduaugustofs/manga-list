@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+//import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import FormularioManga from "./components/FormularioManga/FormularioManga";
 import MangaList from "./components/MangaList/MangaList";
@@ -9,11 +9,8 @@ import MangaList from "./components/MangaList/MangaList";
 function App() {
   return (
     <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={[<FormularioManga />, <MangaList />]} />
-        </Routes>
-      </BrowserRouter>
+      <FormularioManga />
+      <MangaList />
     </div>
   );
 }

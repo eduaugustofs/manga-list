@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-//import FormularioManga from "../FormularioManga/FormularioManga";
 import axios from "axios";
 
 function MangaList() {
@@ -17,25 +16,27 @@ function MangaList() {
     FetchAllMangas();
   }, []);
 
-  const removerManga = (index) => {
-    const mangasRestantes = [...mangas];
-    mangasRestantes.splice(index, 1);
-    console.log(mangasRestantes);
-    setMangas(mangasRestantes);
+  const RemoverManga = async (id) => {
+    try {
+      await axios.delete("http://localhost:5000/mangas/" + id);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <div>
-      {mangas.length === 0 && <p>Nenhum mangá adicionado</p>}
       <ul>
-        {mangas.map((manga, index) => (
-          <li key={index}>
-            <h2>{manga.nome}</h2>
-            <p>Autor: {manga.autor}</p>
-            <p>Data de Publicação: {manga.data}</p>
-            <p>Sinopse: {manga.sinopse}</p>
-            <button onClick={() => removerManga(index)}>Excluir</button>
-          </li>
+        {mangas.map((manga) => (
+          <div key={manga.id}>
+            <li>
+              <h2>{manga.nome}</h2>
+              <p>Autor: {manga.autor}</p>
+              <p>Data de Publicação: {manga.data}</p>
+              <p>Sinopse: {manga.sinopse}</p>
+              <button onClick={() => RemoverManga(manga.id)}>Excluir</button>
+            </li>
+          </div>
         ))}
       </ul>
     </div>

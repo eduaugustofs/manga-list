@@ -26,7 +26,7 @@ app.get("/mangas", (req, res) => {
 });
 
 //Inserindo os dados no banco
-app.post("/bb", (req, res) => {
+app.post("/addmangas", (req, res) => {
   const q =
     "INSERT INTO manga (`nome`, `autor`, `publicacao`, `sinopse`) VALUES (?)";
   const values = [
@@ -41,5 +41,14 @@ app.post("/bb", (req, res) => {
   });
 });
 
-//Aplicação funcionando em localghost 8800;
+app.delete("/mangas/:id", (req, res) => {
+  const mangaId = req.params.id;
+  const q = "DELETE FROM manga WHERE id = ?";
+
+  db.query(q, [mangaId], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Manga deletado");
+  });
+});
+
 app.listen(5000);
