@@ -5,7 +5,7 @@ function FormularioManga(props) {
   const [manga, setManga] = useState({
     nome: "",
     autor: "",
-    date: "",
+    publicacao: null,
     sinopse: "",
   });
 
@@ -13,13 +13,10 @@ function FormularioManga(props) {
     setManga((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  console.log(manga);
-
   const handleClick = async (e) => {
     e.preventDefault();
-
     try {
-      await axios.post("http://localhost:5000/addmangas", manga);
+      await axios.post("http://localhost:8800/addmangas", manga);
       props.onPass(manga);
     } catch (err) {}
   };
@@ -39,7 +36,7 @@ function FormularioManga(props) {
         <br />
         <label>
           Data de publicação:
-          <input type="date" name="data" onChange={handleChange} />
+          <input type="date" name="publicacao" onChange={handleChange} />
         </label>
         <br />
         <label>

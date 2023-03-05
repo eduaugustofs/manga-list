@@ -8,7 +8,7 @@ const app = express();
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
+  password: "1234",
   database: "crud_manga",
 });
 
@@ -28,11 +28,10 @@ app.get("/mangas", (req, res) => {
 app.delete("/mangas/:id", (req, res) => {
   const mangaId = req.params.id;
   const q = "DELETE FROM manga WHERE id = ?";
-  const r = "SELECT * FROM manga";
 
-  db.query(q, r, [mangaId], (err, r) => {
+  db.query(q, [mangaId], (err, data) => {
     if (err) return res.json(err);
-    return res.json(r);
+    return res.json("ok");
   });
 });
 
@@ -48,8 +47,8 @@ app.post("/addmangas", (req, res) => {
   ];
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
-    return res.json("ok!!");
+    return res.json("manga added.");
   });
 });
 
-app.listen(5000);
+app.listen(8800);
