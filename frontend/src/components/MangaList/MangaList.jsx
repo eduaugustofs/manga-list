@@ -17,14 +17,14 @@ function MangaList() {
     FetchAllMangas();
   }, []);
 
-  const renderManga = (neww) => {
-    setMangas([...mangas, neww]);
+  const renderManga = (manga) => {
+    setMangas([...mangas, manga]);
   };
 
   const RemoverManga = async (id) => {
     try {
       const xxx = await axios.delete("http://localhost:8800/mangas/" + id);
-      setMangas((...prev) => prev.filter !== xxx.id);
+      setMangas(mangas.filter((mangas) => mangas.id !== xxx.id));
     } catch (err) {
       console.log(err);
     }
@@ -32,7 +32,7 @@ function MangaList() {
 
   return (
     <div>
-      <FormularioManga onPass={renderManga} />
+      <FormularioManga onAddItem={renderManga} />
       <ul>
         {mangas.map((manga, index) => (
           <li key={index}>

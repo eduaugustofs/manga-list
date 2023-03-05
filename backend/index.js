@@ -47,7 +47,7 @@ app.post("/addmangas", (req, res) => {
   ];
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
-    return res.json("manga added.");
+    return res.json(data);
   });
 });
 

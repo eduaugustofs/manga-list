@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function FormularioManga(props) {
@@ -16,9 +16,12 @@ function FormularioManga(props) {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8800/addmangas", manga);
-      props.onPass(manga);
-    } catch (err) {}
+      const adding = await axios.post("http://localhost:8800/addmangas", manga);
+
+      props.onPass(adding.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
