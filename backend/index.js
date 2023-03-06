@@ -31,7 +31,23 @@ app.delete("/mangas/:id", (req, res) => {
 
   db.query(q, [mangaId], (err, data) => {
     if (err) return res.json(err);
-    return res.json("ok");
+    return res.json(data);
+  });
+});
+
+app.put("/mangas/:id", (req, res) => {
+  const mangaId = req.params.id;
+  const q =
+    "UPDATE manga SET `nome` = ?, `autor` = ?, `publicacao` = ?, `sinopse` = ? WHERE id = ? ";
+  const values = [
+    req.body.nome,
+    req.body.autor,
+    req.body.publicacao,
+    req.body.sinopse,
+  ];
+  db.query(q, [...values, mangaId], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
   });
 });
 
