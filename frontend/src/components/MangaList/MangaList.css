@@ -1,0 +1,15 @@
+.p {
+  font-weight: bold;
+}
+
+.btn {
+  margin: 10px;
+}
+
+.list-group-item {
+  margin-left: 10px;
+}
+
+.alas {
+  word-break: break-all;
+}

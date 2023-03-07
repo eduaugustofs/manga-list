@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./MangaList.css";
 
 //import FormularioManga from "../FormularioManga/FormularioManga";
 
@@ -32,16 +33,45 @@ function MangaList(props) {
   };
 
   return (
-    <div>
-      <ul>
+    <div className="container">
+      <h1>Lista de mangás:</h1>
+      <ul className="list-group d-flex flex-wrap">
         {mangas.map((manga, index) => (
-          <li key={index}>
+          <li className="list-group-item" key={index}>
             <h2>{manga.nome}</h2>
-            <p>Autor: {manga.autor}</p>
-            <p>Data de Publicação: {manga.publicacao}</p>
-            <p>Sinopse: {manga.sinopse}</p>
-            <button onClick={() => RemoverManga(manga.id)}>Excluir</button>
-            <button onClick={() => UpdatingManga(manga.id)}>Editar</button>
+            <div>
+              <div>
+                <p className="">
+                  <span className="p font-weight-bold">Autor:</span> <br />
+                  {manga.autor}
+                </p>
+
+                <p className="">
+                  <span className="p font-weight-bold">
+                    Data de Publicação:
+                  </span>
+                  <br />
+                  {manga.publicacao}
+                </p>
+
+                <p className="alas">
+                  <span className="p font-weight-bold">Sinopse: </span> <br />
+                  {manga.sinopse}
+                </p>
+              </div>
+            </div>
+            <button
+              className="btn btn-danger"
+              onClick={() => RemoverManga(manga.id)}
+            >
+              Excluir
+            </button>
+            <button
+              className="btn btn-warning"
+              onClick={() => UpdatingManga(manga.id)}
+            >
+              Editar
+            </button>
           </li>
         ))}
       </ul>
