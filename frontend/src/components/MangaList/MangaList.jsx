@@ -2,13 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./MangaList.css";
 
-const Manga = ({ manga, setRefresher, setMangaToEdit }) => {  
-  const {
-    nome,
-    autor,
-    publicacao,
-    sinopse
-  } = manga
+const Manga = ({ manga, setRefresher, setMangaToEdit }) => {
+  const { nome, autor, publicacao, sinopse } = manga;
 
   const handleMangaDelete = async (id) => {
     try {
@@ -25,43 +20,35 @@ const Manga = ({ manga, setRefresher, setMangaToEdit }) => {
 
   return (
     <li className="list-group-item">
-    <h2>{nome}</h2>
-    <div>
+      <h2>{nome}</h2>
       <div>
-        <p className="">
-          <span className="p font-weight-bold">Autor:</span> <br />
-          {autor}
-        </p>
+        <div>
+          <p className="">
+            <span className="p font-weight-bold">Autor:</span> <br />
+            {autor}
+          </p>
 
-        <p className="">
-          <span className="p font-weight-bold">
-            Data de Publicação:
-          </span>
-          <br />
-          {publicacao}
-        </p>
+          <p className="">
+            <span className="p font-weight-bold">Data de Publicação:</span>
+            <br />
+            {new Date(publicacao).toLocaleDateString("pt-BR")}
+          </p>
 
-        <p className="alas">
-          <span className="p font-weight-bold">Sinopse: </span> <br />
-          {sinopse}
-        </p>
+          <p className="alas">
+            <span className="p font-weight-bold">Sinopse: </span> <br />
+            {sinopse}
+          </p>
+        </div>
       </div>
-    </div>
-    <button
-      className="btn btn-danger"
-      onClick={() => handleMangaDelete(manga.id)}
-    >
-      Excluir
-    </button>
-    <button
-      className="btn btn-warning"
-      onClick={handleMangaUpdate}
-    >
-      Editar
-    </button>
-  </li>
-  )
-}
+      <button className="btn btn-danger" onClick={() => handleMangaDelete(manga.id)}>
+        Excluir
+      </button>
+      <button className="btn btn-warning" onClick={handleMangaUpdate}>
+        Editar
+      </button>
+    </li>
+  );
+};
 
 function MangaList(props) {
   const [mangas, setMangas] = useState([]);
@@ -78,12 +65,13 @@ function MangaList(props) {
     FetchAllMangas();
   }, [props.refresher]);
 
-
   return (
     <div className="container">
       <h1>Lista de mangás:</h1>
       <ul className="list-group d-flex flex-wrap">
-        {mangas.map((manga, index) => <Manga manga={manga} setRefresher={props.setRefresher} setMangaToEdit={props.setMangaToEdit} key={index}/>)}
+        {mangas.map((manga, index) => (
+          <Manga manga={manga} setRefresher={props.setRefresher} setMangaToEdit={props.setMangaToEdit} key={index} />
+        ))}
       </ul>
     </div>
   );

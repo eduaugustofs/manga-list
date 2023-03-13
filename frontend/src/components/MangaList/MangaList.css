@@ -13,3 +13,7 @@
 .alas {
   word-break: break-all;
 }
+
+.container {
+  margin-bottom: 50px;
+}
