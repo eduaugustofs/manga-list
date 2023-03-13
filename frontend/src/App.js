@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FormularioManga from "./components/FormularioManga/FormularioManga";
-//import { Routes, Route, BrowserRouter } from "react-router-dom";
-
 import MangaList from "./components/MangaList/MangaList";
-
-//GIT FEATURES!
 
 function App() {
   const [refresher, setRefresher] = useState(true);
@@ -19,20 +15,12 @@ function App() {
     }
   }, [mangaToEdit]);
 
-  console.log(mangaToEdit)
+  console.log(mangaToEdit);
 
   return (
     <div>
-      <FormularioManga
-        setRefresher={setRefresher}
-        mangaToEdit={mangaToEdit}
-        setMangaToEdit={setMangaToEdit}
-      />
-      <MangaList
-        refresher={refresher}
-        setRefresher={setRefresher}
-        setMangaToEdit={setMangaToEdit}
-      />
+      <FormularioManga setRefresher={setRefresher} mangaToEdit={mangaToEdit} setMangaToEdit={setMangaToEdit} />
+      <MangaList refresher={refresher} setRefresher={setRefresher} setMangaToEdit={setMangaToEdit} />
     </div>
   );
 }
