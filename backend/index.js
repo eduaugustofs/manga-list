@@ -4,7 +4,7 @@ import cors from "cors";
 
 const app = express();
 
-//Criando conexão com o bando de dados;
+//creating conection with db
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -12,10 +12,19 @@ const db = mysql.createConnection({
   database: "crud_manga",
 });
 
+// Connect to database
+db.connect((err) => {
+  if (err) {
+    console.log("Error connecting to database");
+    return;
+  }
+  console.log("Connected to database");
+});
+
 app.use(express.json());
 app.use(cors());
 
-//Pegando os dados do banco de dados e exibindo;
+//getting all mangas
 app.get("/mangas", (req, res) => {
   const q = "SELECT * FROM manga";
   db.query(q, (err, data) => {
@@ -25,6 +34,25 @@ app.get("/mangas", (req, res) => {
   });
 });
 
+// Get a manga by id
+app.get("/mangas/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("SELECT * FROM manga WHERE id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Error getting manga");
+      return;
+    }
+    console.log(result);
+    if (result.length === 0) {
+      res.status(404).send("Manga not found");
+      return;
+    }
+    res.status(200).json(result[0]);
+  });
+});
+
+//delete a manga by id
 app.delete("/mangas/:id", (req, res) => {
   const mangaId = req.params.id;
   const q = "DELETE FROM manga WHERE id = ?";
@@ -35,32 +63,21 @@ app.delete("/mangas/:id", (req, res) => {
   });
 });
 
+//update a manga by id
 app.put("/mangas/:id", (req, res) => {
   const mangaId = req.params.id;
-  const q =
-    "UPDATE manga SET `nome` = ?, `autor` = ?, `publicacao` = ?, `sinopse` = ? WHERE id = ? ";
-  const values = [
-    req.body.nome,
-    req.body.autor,
-    req.body.publicacao,
-    req.body.sinopse,
-  ];
+  const q = "UPDATE manga SET `nome` = ?, `autor` = ?, `publicacao` = ?, `sinopse` = ? WHERE id = ? ";
+  const values = [req.body.nome, req.body.autor, req.body.publicacao, req.body.sinopse];
   db.query(q, [...values, mangaId], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
   });
 });
 
-//Inserindo os dados no banco
+//add
 app.post("/addmangas", (req, res) => {
-  const q =
-    "INSERT INTO manga (`nome`, `autor`, `publicacao`, `sinopse`) VALUES (?)";
-  const values = [
-    req.body.nome,
-    req.body.autor,
-    req.body.publicacao,
-    req.body.sinopse,
-  ];
+  const q = "INSERT INTO manga (`nome`, `autor`, `publicacao`, `sinopse`) VALUES (?)";
+  const values = [req.body.nome, req.body.autor, req.body.publicacao, req.body.sinopse];
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);

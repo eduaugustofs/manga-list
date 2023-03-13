@@ -2,7 +2,66 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./MangaList.css";
 
-//import FormularioManga from "../FormularioManga/FormularioManga";
+const Manga = ({ manga, setRefresher, setMangaToEdit }) => {  
+  const {
+    nome,
+    autor,
+    publicacao,
+    sinopse
+  } = manga
+
+  const handleMangaDelete = async (id) => {
+    try {
+      await axios.delete("http://localhost:8800/mangas/" + id);
+      setRefresher((prev) => !prev);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleMangaUpdate = () => {
+    setMangaToEdit(manga);
+  };
+
+  return (
+    <li className="list-group-item">
+    <h2>{nome}</h2>
+    <div>
+      <div>
+        <p className="">
+          <span className="p font-weight-bold">Autor:</span> <br />
+          {autor}
+        </p>
+
+        <p className="">
+          <span className="p font-weight-bold">
+            Data de Publicação:
+          </span>
+          <br />
+          {publicacao}
+        </p>
+
+        <p className="alas">
+          <span className="p font-weight-bold">Sinopse: </span> <br />
+          {sinopse}
+        </p>
+      </div>
+    </div>
+    <button
+      className="btn btn-danger"
+      onClick={() => handleMangaDelete(manga.id)}
+    >
+      Excluir
+    </button>
+    <button
+      className="btn btn-warning"
+      onClick={handleMangaUpdate}
+    >
+      Editar
+    </button>
+  </li>
+  )
+}
 
 function MangaList(props) {
   const [mangas, setMangas] = useState([]);
@@ -19,61 +78,12 @@ function MangaList(props) {
     FetchAllMangas();
   }, [props.refresher]);
 
-  const RemoverManga = async (id) => {
-    try {
-      await axios.delete("http://localhost:8800/mangas/" + id);
-      props.setRefresher((prev) => !prev);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const UpdatingManga = (id) => {
-    props.setUpdater(id);
-  };
 
   return (
     <div className="container">
       <h1>Lista de mangás:</h1>
       <ul className="list-group d-flex flex-wrap">
-        {mangas.map((manga, index) => (
-          <li className="list-group-item" key={index}>
-            <h2>{manga.nome}</h2>
-            <div>
-              <div>
-                <p className="">
-                  <span className="p font-weight-bold">Autor:</span> <br />
-                  {manga.autor}
-                </p>
-
-                <p className="">
-                  <span className="p font-weight-bold">
-                    Data de Publicação:
-                  </span>
-                  <br />
-                  {manga.publicacao}
-                </p>
-
-                <p className="alas">
-                  <span className="p font-weight-bold">Sinopse: </span> <br />
-                  {manga.sinopse}
-                </p>
-              </div>
-            </div>
-            <button
-              className="btn btn-danger"
-              onClick={() => RemoverManga(manga.id)}
-            >
-              Excluir
-            </button>
-            <button
-              className="btn btn-warning"
-              onClick={() => UpdatingManga(manga.id)}
-            >
-              Editar
-            </button>
-          </li>
-        ))}
+        {mangas.map((manga, index) => <Manga manga={manga} setRefresher={props.setRefresher} setMangaToEdit={props.setMangaToEdit} key={index}/>)}
       </ul>
     </div>
   );
